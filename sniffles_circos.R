@@ -14,8 +14,8 @@ bedpe_raw <- read.table(in_bed,
 #bedpe_raw <- read.table(gzfile("~/dev/sv_cluster/data/2126/WTSI-OESO_117_a_DNA/WTSI-OESO_117_a_DNA.brass.annot.bedpe.gz"), header = F, sep = "\t", stringsAsFactors = F)
 #names(bedpe_raw) <- c("chr1", "start1", "end1", "chr2", "start2", "end2", "name", "score", "strand1", "strand2", "sample", "type")
 #Filter down to canonical chromosomes and TRA + INV
-bedpe <- bedpe_raw[ bedpe_raw$chr1 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22") &
-    bedpe_raw$chr2 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22") &
+bedpe <- bedpe_raw[ bedpe_raw$chr1 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22", "chrX", "chrY") &
+    bedpe_raw$chr2 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22", "chrX", "chrY") &
     bedpe_raw$type %in% c("TRA", "INV"),]
 #bedpe <- bedpe_raw[ bedpe_raw$chr1 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22") &
 #    bedpe_raw$chr2 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22") &
