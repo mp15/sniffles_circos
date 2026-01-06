@@ -16,6 +16,7 @@ if (length(args)>3) {
 
 if (caller  == "sniffles")
 {
+    print("Sniffles mode")
     # Read and label BEDPE
     bedpe_raw <- read.table(in_bed,
         col.names=c("chr1", "start1", "end1", "chr2", "start2", "end2", "name", "score", "strand1", "strand2", "type", "chrx", "startx", "chry", "starty"),
@@ -26,6 +27,7 @@ if (caller  == "sniffles")
         bedpe_raw$chr2 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22", "chrX", "chrY") &
         bedpe_raw$type %in% c("TRA", "INV"),]
 } else if ( caller == "brass") {
+    print("brass mode")
     # Read and label BEDPE
     bedpe_raw <- read.table(gzfile(in_bed), header = F, sep = "\t", stringsAsFactors = F)
     names(bedpe_raw) <- c("chr1", "start1", "end1", "chr2", "start2", "end2", "name", "score", "strand1", "strand2", "sample", "type")
@@ -33,7 +35,19 @@ if (caller  == "sniffles")
     bedpe <- bedpe_raw[ bedpe_raw$chr1 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22") &
         bedpe_raw$chr2 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22") &
         bedpe_raw$type %in% c("translocation", "inversion"),]
-} else{ stop("Unknown SV caller specified")}
+} else if (caller  == "manta") {
+    print("Manta mode")
+    # Read and label BEDPE
+    bedpe_raw <- read.table(in_bed,
+        col.names=c("chr1", "start1", "end1", "chr2", "start2", "end2", "name", "score", "strand1", "strand2", "type", "filter", "info", "format", "sampledata"),
+        colClasses=c("factor", "integer", "integer", "factor", "integer", "integer", "character",NA,"factor", "factor", "factor", "character", "character", "character", "character"),
+        sep="\t")
+    # Filter down to canonical chromosomes and TRA + INV
+    bedpe <- bedpe_raw[ bedpe_raw$chr1 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22", "chrX", "chrY") &
+        bedpe_raw$chr2 %in% c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22", "chrX", "chrY") &
+        bedpe_raw$type %in% c("TRA", "INV") &
+        bedpe_raw$filter == "PASS",]
+} else { stop("Unknown SV caller specified")}
 
 # Draw to PDF rather than screen
 pdf(out_pdf)
